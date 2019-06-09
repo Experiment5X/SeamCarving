@@ -220,8 +220,8 @@ def compute_seam(args, image):
 
 
 parser = argparse.ArgumentParser(description='Compute and remove seams from images to crop them')
-parser.add_argument('command', type=str,
-                    help='draw|crop')
+parser.add_argument('command', type=str, nargs='+',
+                    help='draw|crop input_image')
 parser.add_argument('-p', '--pixel-count', default=30,
                     help='Number of pixels to remove in one direction', type=int)
 parser.add_argument('-o', '--out-file', default='seam_carved.png',
@@ -232,15 +232,22 @@ parser.add_argument('-x', '--horizontal-slices', action='store_true', default=Tr
                     help='Remove horizontal slices from the image to crop its height. This is the default')
 args = parser.parse_args()
 
-image = cv2.imread('landscape2.jpg')
+if len(args.command) != 2:
+    parser.print_usage()
+    exit()
+
+operation = args.command[0]
+input_image = args.command[1]
+
+image = cv2.imread(input_image)
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-if args.command == 'draw':
+if operation == 'draw':
     seam = compute_seam(args, gray_image)
     draw_seam(seam, image)
 
     cv2.imwrite(args.out_file, image)
-elif args.command == 'crop':
+elif operation == 'crop':
     final_image = image
 
     bar = ChargingBar('Removing pixels', max=args.pixel_count)

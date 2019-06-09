@@ -13,7 +13,7 @@ After
 
 The pixels of least importance are found by first computing the entropy for each pixel in the image. The higher the entropy, the more important the pixel is. The entropy is calculated by summing the difference in pixel intensity for the immediate neighbors. 
 
-Now that the entropy has been calculated it is possible to find the pixels to remove. When cropping only a single pixel is removed from row/column so that the image remains rectangular and each of the pixels that are removed must be touching each other so that the content of the image remains intact. The goal at this step is to find a path or a seam of least entropy from one side of the image to the other. 
+Now that the entropy has been calculated it is possible to find the pixels to remove. When cropping, only a single pixel is removed from each row/column so that the image remains rectangular and each of the pixels that are removed must be touching each other so that the content of the image remains intact. The goal at this step is to find a path or a seam of least entropy from one side of the image to the other. 
 
 Below is an example of a seam calculated for the input image. All of these pixels would be removed during a crop.
 
@@ -30,17 +30,17 @@ pip install -r requirements.txt
 
 To crop an image 50 pixels using horizontal seams:
 ```bash
-python3 seam_carving.py crop -x -o h_cropped.png -p 50
+python3 seam_carving.py crop landscape.jpg -x -o h_cropped.png -p 50
 ```
 
 To crop an image using vertical seams
 ```bash
-python3 seam_carving.py crop -y -o v_cropped.png -p 50
+python3 seam_carving.py crop landscape.jpg -y -o v_cropped.png -p 50
 ```
 
 To draw the horizontal seam
 ```bash
-python3 seam_carving.py draw -x -o v_cropped.png -p 50
+python3 seam_carving.py draw landscape.jpg -x -o v_cropped.png -p 50
 ```
 
 Full Usage
